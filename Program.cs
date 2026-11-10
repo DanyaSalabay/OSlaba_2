@@ -10,13 +10,12 @@ class Program
 {
     static void Main(string[] args)
     {
-        // Проверка: если программу запустил сам вычислитель для генерации данных
         if (args.Length > 0 && args[0] == "generate-child")
         {
             int n = int.Parse(args[1]);
             int k = int.Parse(args[2]);
             RunGenerator(n, k);
-            return; // после отправки генератор завершается
+            return; 
         }
 
         Console.WriteLine("=== Лабораторная работа 2. Многопоточное умножение матриц ===");
@@ -78,7 +77,7 @@ class Program
 
         // 1. Запускаем ВТОРОЙ процесс (Генератор) через Process.Start
         Console.WriteLine("Запуск процесса-генератора...");
-        string exePath = Environment.ProcessPath; // путь к текущему exe
+        string exePath = Environment.ProcessPath; 
         var startInfo = new ProcessStartInfo
         {
             FileName = exePath,
@@ -88,10 +87,8 @@ class Program
         
         using var generatorProcess = Process.Start(startInfo);
 
-        // 2. Сами становимся Вычислителем и ждем данные
         RunReceiver(threads, method);
 
-        // Дожидаемся закрытия процесса-генератора
         generatorProcess?.WaitForExit();
     }
 
